@@ -1,0 +1,36 @@
+{
+    "common": {
+        "uploadApiPort": 3200,
+        "logToFile": true,
+        "logToConsole": true,
+        "logFile": "authentification.log",
+        "uploadDirectory": "/home/bernard/uploads/",
+        "imageDirectory": "/home/bernard/listing/",
+        "imageUrlDirectory": "/images",
+        "email": "",
+        "password": "",
+        "siteUrl": ""
+    },
+    "ftp":{
+        "ftpDirectory": "/home/ftpuser/ftp/files/",
+        "ftpIntegrationInterval": 60000,
+        "removeFilesAfterSent": true
+    },
+    "authentification": 
+    {
+        "active": true,
+        "secret": "122344",
+        "salt": "$2a$10$Vn/zPCM8sSSaYnRmggV4CO",
+        "userRequestEmail": "bdt105@gmail.com",
+        "adminToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZHVzZXIiOjEsImxvZ2luIjoiYWRtaW4iLCJwYXNzd29yZCI6bnVsbCwiZW1haWwiOiJiZXJuYXJkLmRlcmVnbmF1Y291cnRAdmlkYWwuZnIiLCJ0eXBlIjowLCJjb3VudHJ5IjoiZnIiLCJsYXN0TmFtZSI6bnVsbCwiZmlyc3ROYW1lIjpudWxsLCJwaG9uZTEiOm51bGwsInBob25lMiI6bnVsbCwicGhvbmUzIjpudWxsLCJvZmZpY2UiOm51bGwsInRhZyI6IiIsImF2YWlsYWJpbGl0eSI6bnVsbCwibGFuZyI6ImZyIiwicG9zdGFsY29kZSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzczEiOm51bGwsImFkZHJlc3MyIjpudWxsLCJpYXQiOjE1MDU0ODcyODJ9.rBdtZX4wU1KVuDQCRxZyVXfHSJZ0wfr4iFxtOJGOZ4Q"
+    },    
+    "mySql": 
+    {
+        "host": "localhost",
+        "user": "root",
+        "port": "3306",
+        "password": "Root772-",
+        "database": "listing",
+        "fileDirectory": "/var/lib/mysql-files/" 
+    }
+}
