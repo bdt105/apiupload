@@ -64,7 +64,7 @@ export class ApiUpload {
 
     public assign() {
         this.app.get('/', (request: any, response: any) => {
-            response.send('API Serveur Upload is running');
+            this.respond(response, 200, 'API Upload is running');
         });
 
         this.app.post('/uploadExcelFile', this.upload.single('file'), (req: any, res: any) => {
@@ -131,7 +131,7 @@ export class ApiUpload {
                             } else {
                                 this.respond(res, 500, error);
                             }
-                        }, req.file.originalname, fields, req.file.filename, req.body.headerRowNumber, newFile);
+                        }, req.file.originalname, fields, req.file.filename, req.body.headerRowNumber, newFile, null);
                 }, uploadDirectory + req.file.filename);
         }
         );

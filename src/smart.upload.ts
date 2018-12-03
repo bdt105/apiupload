@@ -308,10 +308,10 @@ export class SmartUpload {
         }
     }
 
-    private insertConfigurationFile(callback: Function, tableName: string, originalFileName: string, headerRowNumber: number) {
-        let sql = "insert into configuration (fileName, tableName, headerRowNumber, owner, title, displayLabel) values (" +
+    private insertConfigurationFile(callback: Function, tableName: string, originalFileName: string, headerRowNumber: number, configuration: string) {
+        let sql = "insert into configuration (fileName, tableName, headerRowNumber, owner, title, displayLabel, configuration) values (" +
             "'" + originalFileName + "', '" + tableName + "', " +
-            headerRowNumber + ", '" + this.owner + "', '" + originalFileName + "', 1)";
+            headerRowNumber + ", '" + this.owner + "', '" + originalFileName + "', 1, '" + configuration + "')";
         this.connexion.querySql(
             (error: any, data: any) => {
                 if (!error) {
@@ -323,8 +323,8 @@ export class SmartUpload {
             }, sql);
     }
 
-    private updateConfigurationFile(callback: Function, idconfiguration: number, tableName: string) {
-        let sql = "update configuration set tableName='" + tableName + "' where idconfiguration=" + idconfiguration;
+    private updateConfigurationFile(callback: Function, idconfiguration: number, tableName: string, configuration: string) {
+        let sql = "update configuration set tableName='" + tableName + "', configuration='" + configuration + "' where idconfiguration=" + idconfiguration;
         this.connexion.querySql(
             (error: any, data: any) => {
                 if (!error) {
@@ -345,18 +345,18 @@ export class SmartUpload {
             }, sql);
     }
 
-    private saveConfigurationFile(callback: Function, tableName: string, originalFileName: string, headerRowNumber: number, idconfiguration: number) {
+    private saveConfigurationFile(callback: Function, tableName: string, originalFileName: string, headerRowNumber: number, idconfiguration: number, configuration: string) {
         if (idconfiguration) {
             this.updateConfigurationFile(
                 (data1: any, error1: any) => {
                     callback(data1, error1);
-                }, idconfiguration, tableName);
+                }, idconfiguration, tableName, configuration);
         } else {
             this.insertConfigurationFile(
                 (data: any, error: any) => {
                     this.idconfiguration = data.insertId;
                     callback(data, error);
-                }, tableName, originalFileName, headerRowNumber);
+                }, tableName, originalFileName, headerRowNumber,  configuration);
         }
     }
 
@@ -368,7 +368,7 @@ export class SmartUpload {
     //     return ret;
     // }
 
-    private configureAndImport(callback: Function, fileName: string, csvFileName: string, fields: any, headerRowNumber: number, idconfiguration: number, tableName: string) {
+    private configureAndImport(callback: Function, fileName: string, csvFileName: string, fields: any, headerRowNumber: number, idconfiguration: number, tableName: string, configuration: string) {
         this.dropTable((data: any, error: any) => {
             if (!error) {
                 this.createTable((data1: any, error1: any) => {
@@ -381,7 +381,7 @@ export class SmartUpload {
                             } else {
                                 callback(data2, error2);
                             }
-                        }, tableName, fileName, headerRowNumber, idconfiguration);
+                        }, tableName, fileName, headerRowNumber, idconfiguration, configuration);
                     } else {
                         callback(data1, error1);
                     }
@@ -392,7 +392,7 @@ export class SmartUpload {
         }, tableName);
     }
 
-    public importCsvFile(callback: Function, fileName: string, fields: any, csvFileName: string, headerRowNumber: number, newFile: boolean) {
+    public importCsvFile(callback: Function, fileName: string, fields: any, csvFileName: string, headerRowNumber: number, newFile: boolean, configuration: string) {
         this.idconfiguration = null;
         this.loadConfigurationFile((data: any, error: any) => {
             if (!error) {
@@ -404,18 +404,18 @@ export class SmartUpload {
                         this.configureAndImport(
                             (data2: any, error2: any) => {
                                 callback(data2, error2);
-                            }, fileName, csvFileName, fields, headerRowNumber, this.idconfiguration, tableName);
+                            }, fileName, csvFileName, fields, headerRowNumber, this.idconfiguration, tableName, configuration);
                     } else {
                         this.configureAndImport(
                             (data2: any, error2: any) => {
                                 callback(data2, error2);
-                            }, fileName, csvFileName, fields, headerRowNumber, null, tableName);
+                            }, fileName, csvFileName, fields, headerRowNumber, null, tableName, configuration);
                     }
                 } else {
                     this.configureAndImport(
                         (data2: any, error2: any) => {
                             callback(data2, error2);
-                        }, fileName, csvFileName, fields, headerRowNumber, null, tableName);
+                        }, fileName, csvFileName, fields, headerRowNumber, null, tableName, configuration);
                 }
             } else {
                 callback(null, error);
@@ -433,7 +433,7 @@ export class SmartUpload {
         this.writeCsvFile(mysqlDirectory, downloadFileName, csvObject, headerRowNumber);
         fields = Object.keys(csvObject[headerRowNumber]);
         if (fields) {
-            this.importCsvFile(callback, fileName, fields, downloadFileName, headerRowNumber, newFile);
+            this.importCsvFile(callback, fileName, fields, downloadFileName, headerRowNumber, newFile, null);
         } else {
             callback(null, { "error": "Error reading csv" });
         }

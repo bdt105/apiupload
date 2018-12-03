@@ -52,7 +52,7 @@ let integrateFtpFiles = () => {
                                         } else {
                                             toolbox.logError("File " + file + " NOT imported" + JSON.stringify(error2));
                                         }
-                                    }, fileName, fields, csvFileName, 0, false);
+                                    }, fileName, fields, csvFileName, 0, json.configuration.newFile, dat);
                             } else {
                                 toolbox.logError(error1);
                             }
@@ -65,8 +65,8 @@ let integrateFtpFiles = () => {
 }
 
 integrateFtpFiles();
-
+/*
 setInterval(() => {
     integrateFtpFiles();
 }, interval);
-
+*/

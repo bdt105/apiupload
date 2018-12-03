@@ -20,7 +20,7 @@
             "type": "node",
             "request": "launch",
             "name": "serverApiIntergrateFiles",
-            "program": "${workspaceRoot}/build/serverApiIntergrateFiles.js",
+            "program": "${workspaceRoot}/build/serverIntergrateFiles.js",
             "cwd": "${workspaceRoot}/build/",
             "sourceMaps": true,
             "outFiles": [
