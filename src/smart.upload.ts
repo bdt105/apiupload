@@ -304,7 +304,7 @@ export class SmartUpload {
                             }, tableName);
                         }
                     }
-                }, "idconfiguration", idconfiguration.toString());
+                }, "idconfiguration="+ idconfiguration.toString());
         }
     }
 
@@ -337,8 +337,8 @@ export class SmartUpload {
             }, sql);
     }
 
-    private loadConfigurationFile(callback: Function, field: string, value: string) {
-        let sql = "select * from configuration where " + field + "='" + value + "'";
+    private loadConfigurationFile(callback: Function, where: string) {
+        let sql = "select * from configuration where " + where;
         this.connexion.querySql(
             (error: any, data: any) => {
                 callback(data, error);
@@ -420,7 +420,7 @@ export class SmartUpload {
             } else {
                 callback(null, error);
             }
-        }, "fileName", fileName);
+        }, "fileName='" + fileName + "' and owner='" + this.owner + "'");
 
     }
 

@@ -268,7 +268,7 @@ class SmartUpload {
                         }, tableName);
                     }
                 }
-            }, "idconfiguration", idconfiguration.toString());
+            }, "idconfiguration=" + idconfiguration.toString());
         }
     }
     insertConfigurationFile(callback, tableName, originalFileName, headerRowNumber, configuration) {
@@ -298,8 +298,8 @@ class SmartUpload {
             callback(data, error);
         }, sql);
     }
-    loadConfigurationFile(callback, field, value) {
-        let sql = "select * from configuration where " + field + "='" + value + "'";
+    loadConfigurationFile(callback, where) {
+        let sql = "select * from configuration where " + where;
         this.connexion.querySql((error, data) => {
             callback(data, error);
         }, sql);
@@ -378,7 +378,7 @@ class SmartUpload {
             else {
                 callback(null, error);
             }
-        }, "fileName", fileName);
+        }, "fileName='" + fileName + "' and owner='" + this.owner + "'");
     }
     importExcelFile(callback, directory, fileName, downloadFileName, sheetName, headerRowNumber, newFile) {
         let csvObject = null;
