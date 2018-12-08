@@ -304,7 +304,7 @@ export class SmartUpload {
                             }, tableName);
                         }
                     }
-                }, "idconfiguration="+ idconfiguration.toString());
+                }, "idconfiguration=" + idconfiguration.toString());
         }
     }
 
@@ -356,7 +356,7 @@ export class SmartUpload {
                 (data: any, error: any) => {
                     this.idconfiguration = data.insertId;
                     callback(data, error);
-                }, tableName, originalFileName, headerRowNumber,  configuration);
+                }, tableName, originalFileName, headerRowNumber, configuration);
         }
     }
 
@@ -376,7 +376,7 @@ export class SmartUpload {
                         this.saveConfigurationFile((data2: any, error2: any) => {
                             if (!error2) {
                                 this.importCsvToTable((data3: any, error3: any) => {
-                                        callback(data3, error3);
+                                    callback(data3, error3);
                                 }, csvFileName, tableName);
                             } else {
                                 callback(data2, error2);
