@@ -160,7 +160,7 @@ export class ApiUpload {
             }
             var fs = require('fs');
             let transfertDirectory = this.myToolbox.getConfiguration().common.transfertDirectory;
-            let id = this.myToolbox.getUniqueId();
+            let id = this.myToolbox.getUniqueShortId();
             if (id) {
                 if (!fs.existsSync(transfertDirectory)) {
                     fs.mkdirSync(transfertDirectory);
