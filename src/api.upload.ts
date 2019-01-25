@@ -258,6 +258,8 @@ export class ApiUpload {
                             this.respond(res, 500, { status: "ERR", error: error })
                         }
                     })
+                } else {
+                    this.respond(res, 404, "No directory " + personnalDirectory);
                 }
             } else {
                 this.respond(res, 403, "No 'identifier' set");
