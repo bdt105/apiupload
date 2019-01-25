@@ -57,6 +57,7 @@ class ApiUpload {
             this.respond(response, 200, 'API Upload is running');
         });
         this.app.post('/uploadFile', this.upload.single('file'), (req, res) => {
+            this.logMessage("Api called: " + '/uploadFile');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             let params = req.body;
@@ -100,6 +101,7 @@ class ApiUpload {
             }
         });
         this.app.post('/downloadFile', this.upload.array(), (req, res) => {
+            this.logMessage("Api called: " + '/downloadFile');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             let params = req.body;
@@ -137,6 +139,7 @@ class ApiUpload {
             }
         });
         this.app.post('/identifier', this.upload.array(), (req, res) => {
+            this.logMessage("Api called: " + '/identifier');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             if (this.configuration.requiresToken) {
@@ -163,6 +166,7 @@ class ApiUpload {
             }
         });
         this.app.post('/checkIdentifier', this.upload.array(), (req, res) => {
+            this.logMessage("Api called: " + '/checkIdentifier');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             let id = req.body.identifier;
@@ -188,6 +192,7 @@ class ApiUpload {
             }
         });
         this.app.post('/deleteFile', this.upload.array(), (req, res) => {
+            this.logMessage("Api called: " + '/deleteFile');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             let params = req.body;
@@ -222,6 +227,7 @@ class ApiUpload {
             }
         });
         this.app.post('/listFiles', this.upload.array(), (req, res) => {
+            this.logMessage("Api called: " + '/listFiles');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             let params = req.body;
@@ -253,6 +259,7 @@ class ApiUpload {
             }
         });
         this.app.post('/uploadExcelFile', this.upload.single('file'), (req, res) => {
+            this.logMessage("Api called: " + '/uploadExcelFile');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             if (this.configuration.requiresToken) {
@@ -283,6 +290,7 @@ class ApiUpload {
             }, uploadDirectory, req.file.originalname, req.file.filename, req.body.sheetname, req.body.headerRowNumber, newFile);
         });
         this.app.post('/uploadCsvFile', this.upload.single('file'), (req, res) => {
+            this.logMessage("Api called: " + '/uploadCsvFile');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             if (this.configuration.requiresToken) {
@@ -317,6 +325,7 @@ class ApiUpload {
             }, uploadDirectory + req.file.filename);
         });
         this.app.post('/uploadImage', this.upload.single('file'), (req, res) => {
+            this.logMessage("Api called: " + '/uploadImage');
             this.currentOwner = req.body.owner;
             let token = req.body.token;
             if (this.configuration.requiresToken) {
@@ -334,6 +343,7 @@ class ApiUpload {
             this.respond(res, 200, mes);
         });
         this.app.delete('/deleteImage', this.upload.array(), (request, response) => {
+            this.logMessage("Api called: " + '/deleteImage');
             this.currentOwner = request.body.owner;
             let token = request.body.token;
             if (this.configuration.requiresToken) {
@@ -352,6 +362,7 @@ class ApiUpload {
             this.respond(response, 200, { "status": "ok" });
         });
         this.app.post('/deleteConfigurationFile', this.upload.array(), (request, response) => {
+            this.logMessage("Api called: " + '/deleteConfigurationFile');
             this.currentOwner = request.body.owner;
             let token = request.body.token;
             let idconfiguration = request.body.idconfiguration;
