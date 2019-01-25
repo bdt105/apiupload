@@ -11,6 +11,9 @@
         "password": "",
         "siteUrl": ""
     },
+    "excel": {
+        "fileDirectory": "."
+    },
     "ftp":{
         "ftpDirectory": "/home/ftpuser/ftp/files/",
         "ftpIntegrationInterval": 60000,
@@ -26,11 +29,16 @@
     },    
     "mySql": 
     {
-        "host": "localhost",
+        "host": "vps592280.ovh.net",
+        "hostOld": "localhost",
         "user": "root",
         "port": "3306",
         "password": "Root772-",
-        "database": "listing",
-        "fileDirectory": "/var/lib/mysql-files/" 
+        "database": "mercalys",
+        "fileDirectory": "/var/lib/mysql-files/",
+        "importStep": 50
+    },
+    "elasticsearch":{
+        "baseUrl": "http://vps592280.ovh.net:9200/"
     }
 }

@@ -6,14 +6,18 @@
         "logFile": "authentification.log",
         "uploadDirectory": "/home/bernard/uploads/",
         "imageDirectory": "/home/bernard/listing/",
-        "imageUrlDirectory": "/images",
+        "transfertDirectory": "/home/bernard/transfert/",
+        "imageUrlDirectory": "/images/",
         "email": "",
         "password": "",
         "siteUrl": ""
     },
+    "excel": {
+        "fileDirectory": "."
+    },
     "ftp":{
         "ftpDirectory": "/home/ftpuser/ftp/files/",
-        "ftpIntegrationInterval": 180000,
+        "ftpIntegrationInterval": 60000,
         "removeFilesAfterSent": true
     },
     "authentification": 
@@ -26,11 +30,17 @@
     },    
     "mySql": 
     {
-        "host": "localhost",
+        "host": "vps592280.ovh.net",
+        "hostOld": "192.168.1.202",
         "user": "root",
         "port": "3306",
         "password": "Root772-",
-        "database": "listing",
-        "fileDirectory": "/var/lib/mysql-files/" 
+        "database": "mercalys",
+        "fileDirectory": "/var/lib/mysql-files/",
+        "importStep": 50
+    },
+    "elasticsearch":{
+        "baseUrl": "http://vps592280.ovh.net:9200/",
+        "index": "mercalys"
     }
 }

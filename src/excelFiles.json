@@ -1,0 +1,39 @@
+{
+    "countries of the world.xls": {
+        "active": true,
+        "owner": "bdt105@gmail.com",
+        "headerRowNumber": 6,
+        "sheetName": "Mercalys",
+        "overwrite": true,
+        "keyFields": [
+            "Country",
+            "Code"
+        ],
+        "removeAfterImport": false,
+        "exportType": "elasticsearch"
+    },
+    "stock.xlsx": {
+        "active": false,
+        "owner": "bdt105@gmail.com",
+        "headerRowNumber": 10,
+        "sheetName": "Mercalys",
+        "overwrite": true,
+        "keyFields": [
+            "EAN"
+        ],
+        "removeAfterImport": false,
+        "exportType": "elasticsearch"
+    },
+    "arrifana.xlsx": {
+        "active": true,
+        "owner": "bdt105@gmail.com",
+        "headerRowNumber": 14,
+        "sheetName": "Mercalys",
+        "overwrite": true,
+        "keyFields": [
+            "EAN"
+        ],
+        "removeAfterImport": false,
+        "exportType": "elasticsearch"
+    }
+}

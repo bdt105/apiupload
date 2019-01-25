@@ -19,6 +19,17 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "clientIntergrateExcelFiles",
+            "program": "${workspaceRoot}/build/clientIntergrateExcelFiles.js",
+            "cwd": "${workspaceRoot}/build/",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/build/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "serverApiIntergrateFiles",
             "program": "${workspaceRoot}/build/serverIntergrateFiles.js",
             "cwd": "${workspaceRoot}/build/",

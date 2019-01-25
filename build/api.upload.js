@@ -48,13 +48,209 @@ class ApiUpload {
             response.setHeader('content-type', 'application/json');
         }
         else {
-            response.setHeader('content-type', 'test/plain');
+            response.setHeader('content-type', 'text/plain');
         }
         response.send(JSON.stringify(data));
     }
     assign() {
         this.app.get('/', (request, response) => {
             this.respond(response, 200, 'API Upload is running');
+        });
+        this.app.post('/uploadFile', this.upload.single('file'), (req, res) => {
+            this.currentOwner = req.body.owner;
+            let token = req.body.token;
+            let params = req.body;
+            delete (params.token);
+            if (this.configuration.requiresToken) {
+                let authent = this.connexion.checkJwt(token);
+                if (!authent.decoded) {
+                    this.respond(res, 403, 'Token is absent or invalid');
+                    return;
+                }
+            }
+            var fs = require('fs');
+            let uploadDirectory = this.myToolbox.getConfiguration().common.uploadDirectory;
+            let transfertDirectory = this.myToolbox.getConfiguration().common.transfertDirectory;
+            if (!fs.existsSync(uploadDirectory)) {
+                fs.mkdirSync(uploadDirectory);
+                this.logMessage("Upload directory created");
+            }
+            if (params.identifier) {
+                if (!fs.existsSync(transfertDirectory)) {
+                    fs.mkdirSync(transfertDirectory);
+                    this.logMessage("transfertDirectory directory created");
+                }
+                let personnalDirectory = transfertDirectory + params.identifier + "/";
+                if (fs.existsSync(personnalDirectory)) {
+                    fs.copyFile(uploadDirectory + req.file.filename, personnalDirectory + req.file.originalname, (err) => {
+                        if (err) {
+                            this.respond(res, 500, JSON.stringify({ status: "ERR", error: err }));
+                        }
+                        else {
+                            this.respond(res, 200, JSON.stringify({ status: "OK", "message": "File stored" }));
+                        }
+                    });
+                }
+                else {
+                    this.respond(res, 404, "Identifier '" + params.identifier + "' is unknowed");
+                }
+            }
+            else {
+                this.respond(res, 403, "No 'identifier' set");
+            }
+        });
+        this.app.post('/downloadFile', this.upload.array(), (req, res) => {
+            this.currentOwner = req.body.owner;
+            let token = req.body.token;
+            let params = req.body;
+            delete (params.token);
+            if (this.configuration.requiresToken) {
+                let authent = this.connexion.checkJwt(token);
+                if (!authent.decoded) {
+                    this.respond(res, 403, 'Token is absent or invalid');
+                    return;
+                }
+            }
+            var fs = require('fs');
+            let transfertDirectory = this.myToolbox.getConfiguration().common.transfertDirectory;
+            if (params.identifier) {
+                if (!fs.existsSync(transfertDirectory)) {
+                    fs.mkdirSync(transfertDirectory);
+                    this.logMessage("transfertDirectory directory created");
+                }
+                let personnalDirectory = transfertDirectory + params.identifier + "/";
+                if (fs.existsSync(personnalDirectory)) {
+                    if (fs.existsSync(personnalDirectory + params.fileName)) {
+                        let content = fs.readFileSync(personnalDirectory + params.fileName, "utf8");
+                        this.respond(res, 200, content);
+                    }
+                    else {
+                        this.respond(res, 403, null);
+                    }
+                }
+                else {
+                    this.respond(res, 404, "Identifier '" + params.identifier + "' is unknowed");
+                }
+            }
+            else {
+                this.respond(res, 403, "No 'identifier' set");
+            }
+        });
+        this.app.post('/identifier', this.upload.array(), (req, res) => {
+            this.currentOwner = req.body.owner;
+            let token = req.body.token;
+            if (this.configuration.requiresToken) {
+                let authent = this.connexion.checkJwt(token);
+                if (!authent.decoded) {
+                    this.respond(res, 403, 'Token is absent or invalid');
+                    return;
+                }
+            }
+            var fs = require('fs');
+            let transfertDirectory = this.myToolbox.getConfiguration().common.transfertDirectory;
+            let id = this.myToolbox.getUniqueId();
+            if (id) {
+                if (!fs.existsSync(transfertDirectory)) {
+                    fs.mkdirSync(transfertDirectory);
+                    this.logMessage("transfertDirectory directory created");
+                }
+                let personnalDirectory = transfertDirectory + id + "/";
+                if (!fs.existsSync(personnalDirectory)) {
+                    fs.mkdirSync(personnalDirectory);
+                    this.logMessage(personnalDirectory + " directory created");
+                }
+                this.respond(res, 200, { status: "OK", identifier: id });
+            }
+        });
+        this.app.post('/checkIdentifier', this.upload.array(), (req, res) => {
+            this.currentOwner = req.body.owner;
+            let token = req.body.token;
+            let id = req.body.identifier;
+            if (this.configuration.requiresToken) {
+                let authent = this.connexion.checkJwt(token);
+                if (!authent.decoded) {
+                    this.respond(res, 403, 'Token is absent or invalid');
+                    return;
+                }
+            }
+            var fs = require('fs');
+            let transfertDirectory = this.myToolbox.getConfiguration().common.transfertDirectory;
+            if (id) {
+                if (fs.existsSync(transfertDirectory)) {
+                    this.respond(res, 200, { status: "OK", identifier: id });
+                }
+                else {
+                    this.respond(res, 404, { status: "ERR", "message": "Identifier " + id + " not found" });
+                }
+            }
+            else {
+                this.respond(res, 403, { status: "ERR", "message": "No identifier" });
+            }
+        });
+        this.app.post('/deleteFile', this.upload.array(), (req, res) => {
+            this.currentOwner = req.body.owner;
+            let token = req.body.token;
+            let params = req.body;
+            delete (params.token);
+            if (this.configuration.requiresToken) {
+                let authent = this.connexion.checkJwt(token);
+                if (!authent.decoded) {
+                    this.respond(res, 403, 'Token is absent or invalid');
+                    return;
+                }
+            }
+            if (params.identifier) {
+                var fs = require('fs');
+                let transfertDirectory = this.myToolbox.getConfiguration().common.transfertDirectory;
+                let personnalDirectory = transfertDirectory + params.identifier + "/";
+                if (fs.existsSync(personnalDirectory + params.fileName)) {
+                    fs.unlink(personnalDirectory + params.fileName, (err) => {
+                        if (err) {
+                            this.respond(res, 500, { status: "ERR", error: err });
+                        }
+                        else {
+                            this.respond(res, 200, { status: "OK", "message": "File " + params.fileName + " deleted" });
+                        }
+                    });
+                }
+                else {
+                    this.respond(res, 200, { status: "OK", "message": "File " + params.fileName + " not found" });
+                }
+            }
+            else {
+                this.respond(res, 403, "No 'identifier' set");
+            }
+        });
+        this.app.post('/listFiles', this.upload.array(), (req, res) => {
+            this.currentOwner = req.body.owner;
+            let token = req.body.token;
+            let params = req.body;
+            delete (params.token);
+            if (this.configuration.requiresToken) {
+                let authent = this.connexion.checkJwt(token);
+                if (!authent.decoded) {
+                    this.respond(res, 403, 'Token is absent or invalid');
+                    return;
+                }
+            }
+            if (params.identifier) {
+                var fs = require('fs');
+                let transfertDirectory = this.myToolbox.getConfiguration().common.transfertDirectory;
+                let personnalDirectory = transfertDirectory + params.identifier + "/";
+                if (fs.existsSync(personnalDirectory)) {
+                    fs.readdir(personnalDirectory, (error, files) => {
+                        if (!error) {
+                            this.respond(res, 200, { status: "OK", "data": files });
+                        }
+                        else {
+                            this.respond(res, 500, { status: "ERR", error: error });
+                        }
+                    });
+                }
+            }
+            else {
+                this.respond(res, 403, "No 'identifier' set");
+            }
         });
         this.app.post('/uploadExcelFile', this.upload.single('file'), (req, res) => {
             this.currentOwner = req.body.owner;

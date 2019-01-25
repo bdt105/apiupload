@@ -1,0 +1,90 @@
+{
+    "countries of the world.xls": {
+        "active": false,
+        "owner": "bdt105@gmail.com",
+        "headerRowNumber": 6,
+        "sheetName": "Mercalys",
+        "overwrite": true,
+        "keyFields": [
+            "Country",
+            "Code"
+        ],
+        "removeAfterImport": false
+    },
+    "stock.xlsx": {
+        "active": false,
+        "owner": "bdt105@gmail.com",
+        "headerRowNumber": 10,
+        "sheetName": "Mercalys",
+        "overwrite": true,
+        "keyFields": [
+            "EAN"
+        ],
+        "removeAfterImport": false
+    },
+    "arrifana.xlsx": {
+        "active": false,
+        "owner": "bdt105@gmail.com",
+        "headerRowNumber": 14,
+        "sheetName": "Mercalys",
+        "overwrite": true,
+        "keyFields": [
+            "EAN"
+        ],
+        "removeAfterImport": false
+    },
+    "vendas01092015.xlsx": {
+        "active": true,
+        "owner": "bdt105@gmail.com",
+        "headerRowNumber": 8,
+        "sheetName": "Mercalys",
+        "overwrite": true,
+        "fields": 
+            {
+                "EAN prior.": {
+                    "name": "EAN prior.",
+                    "type": "varchar",
+                    "size": 150,
+                    "isKey": true
+                },
+                "Valor Preço Compra": {
+                    "name": "Valor Preço Compra",
+                    "type": "decimal",
+                    "size": "10,4",
+                    "isKey": false
+                },
+                "Valor Preço Venda": {
+                    "name": "Valor Preço Venda",
+                    "type": "decimal",
+                    "size": "10,4",
+                    "isKey": false
+                },
+                "Quantidade": {
+                    "name": "Quantidade",
+                    "type": "decimal",
+                    "size": "10,4",
+                    "isKey": false
+                },
+                "Valor Margem": {
+                    "name": "Valor Margem",
+                    "type": "decimal",
+                    "size": "10,4",
+                    "isKey": false
+                },
+                "% Margem": {
+                    "name": "% Margem",
+                    "type": "decimal",
+                    "size": "10,4",
+                    "isKey": false
+                },
+                "Valor IVA": {
+                    "name": "Valor IVA",
+                    "type": "decimal",
+                    "size": "10,4",
+                    "isKey": false
+                }
+            }
+        ,
+        "removeAfterImport": false
+    }
+}
