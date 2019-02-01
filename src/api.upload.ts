@@ -61,7 +61,6 @@ export class ApiUpload {
         response.send(JSON.stringify(data));
     }
 
-
     public assign() {
         this.app.get('/', (request: any, response: any) => {
             this.respond(response, 200, 'API Upload is running');

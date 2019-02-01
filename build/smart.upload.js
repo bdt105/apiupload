@@ -657,8 +657,16 @@ class SmartUpload {
         let mysqlDirectory = this.configuration.mySql.fileDirectory;
         this.writeCsvFile(mysqlDirectory, downloadFileName, csvObject, headerRowNumber);
         fields = Object.keys(csvObject[headerRowNumber]);
+        let fieldsDefinition = [];
+        for (var i = 0; i < fields.length; i++) {
+            let field = {};
+            field.name = fields[i];
+            field.type = "varchar";
+            field.size = 100;
+            fieldsDefinition.push(field);
+        }
         if (fields) {
-            this.importCsvFile(callback, fileName, fields, downloadFileName, headerRowNumber, newFile, null);
+            this.importCsvFile(callback, fileName, fieldsDefinition, downloadFileName, headerRowNumber, newFile, null);
         }
         else {
             callback(null, { "error": "Error reading csv" });

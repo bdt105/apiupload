@@ -35,7 +35,7 @@
         "user": "root",
         "port": "3306",
         "password": "Root772-",
-        "database": "mercalys",
+        "database": "listing",
         "fileDirectory": "/var/lib/mysql-files/",
         "importStep": 50
     },
